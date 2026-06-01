@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Check Turno</title>
+</head>
+<body>
+
+<h2>Invio posizione...</h2>
+
+<script>
+
+const params = new URLSearchParams(window.location.search);
+
+let numero = params.get("n");
+let tipo = params.get("t");
+
+if (!tipo) {
+    tipo = "TURNO";
+}
+
+navigator.geolocation.getCurrentPosition(function(position) {
+
+    let lat = position.coords.latitude;
+    let lon = position.coords.longitude;
+
+    let messaggio =
+`${tipo}
+
+Posizione:
+https://maps.google.com/?q=${lat},${lon}`;
+
+    let url = `https://wa.me/${numero}?text=${encodeURIComponent(messaggio)}`;
+
+    window.location.href = url;
+
+}, function() {
+
+    alert("Posizione non autorizzata");
+
+});
+
+</script>
+
+</body>
+</html>
