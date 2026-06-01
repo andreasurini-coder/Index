@@ -8,6 +8,10 @@
 
 <h2>Invio posizione...</h2>
 
+<button id="waButton" style="display:none; font-size:20px; padding:15px;">
+Apri WhatsApp
+</button>
+
 <script>
 
 const params = new URLSearchParams(window.location.search);
@@ -15,10 +19,6 @@ const params = new URLSearchParams(window.location.search);
 let numero = params.get("n");
 let tipo = params.get("t");
 
-if (!tipo) {
-    tipo = "TURNO";
-}
-= function() {
 navigator.geolocation.getCurrentPosition(function(position) {
 
     let lat = position.coords.latitude;
@@ -32,7 +32,13 @@ https://maps.google.com/?q=${lat},${lon}`;
 
     let url = `https://wa.me/${numero}?text=${encodeURIComponent(messaggio)}`;
 
-    window.location.href = url;
+    let button = document.getElementById("waButton");
+
+    button.style.display = "block";
+
+    button.onclick = function() {
+        window.location.href = url;
+    };
 
 }, function() {
 
